@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  demo-db:
+    image: postgres
+    container_name: demo-db
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=userok
+  demo1:
+    build: .
+    container_name: demo1
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    depends_on:
+      - demo-db
+    environment:
+      - DB_HOST=demo-db
+
